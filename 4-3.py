@@ -15,14 +15,20 @@ c2
 6
 '''
 
-n = int(input())
+x, y = input()
+
+x = ord(x)
+y = int(y)
+
+cases = [(-2, -1), (-2, 1), (2, -1), (2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2)]
 
 count = 0
 
-for i in range(n+1):
-    for j in range(60):
-        for k in range(60):
-            if '3' in str(i)+str(j)+str(k):
-                count += 1
+for case in cases:
+    nx = x + case[0]
+    ny = y + case[1]
+
+    if nx >= ord('a') and nx <= ord('h') and ny >= 1 and ny <= 8:
+        count += 1
 
 print(count)
