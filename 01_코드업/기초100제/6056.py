@@ -1,0 +1,5 @@
+a, b = input().split()
+a = bool(int(a))
+b = bool(int(b))
+print(not(a and b) and not(not a and not b))
+#print((not(a&b)) & (not((not a) & (not b))))
