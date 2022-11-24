@@ -1,4 +1,4 @@
-# 그리디 문제 06 - 무지의 먹방 라이브
+# Q06 - 무지의 먹방 라이브
 # 프로그래머스 링크 통해서 풀어야 하는 문제
 # https://school.programmers.co.kr/learn/courses/30/lessons/42891
 
@@ -24,7 +24,7 @@ def solution(food_times, k):
     # 시간이 작은 음식부터 빼야 하므로 우선순위 큐를 이용
     q = []
     for i in range(len(food_times)):
-        # (음식 시간, 음식 번호) 형태로 우선순위 큐를 이용  *음식번호는 인덱스+1
+        # (음식 시간, 음식 번호) 형태로 우선순위 큐를 이용   *음식번호는 인덱스+1
         heapq.heappush(q, (food_times[i], i+1))
 
     sum_value = 0 # 먹기 위해 사용한 시간
