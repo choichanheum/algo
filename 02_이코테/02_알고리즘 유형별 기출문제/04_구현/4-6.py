@@ -30,21 +30,46 @@
 
 '''
 
-# def solution(n, build_frame):
-#     answer = [[]]
-#     return answer
+# 설치/삭제한 구조물이 규칙을 위반하지 않는지 체크 (위반 시 False 리턴)
+def check(answer):
+    for data in answer:
+        x, y, a = data
+        if a == 0: # 기둥
+            # 1. 기둥은 바닥 위에 있거나 보의 한쪽 끝 부분 위에 있거나, 또는 다른 기둥 위에 있어야 합니다.
+            if y == 0 or [x-1, y, 1] in answer or [x, y, 1] in answer or [x, y-1, 0] in answer:
+                continue
+            else:
+                return False
 
+        if a == 1: # 보
+            # 2. 보는 한쪽 끝 부분이 기둥 위에 있거나, 또는 양쪽 끝 부분이 다른 보와 동시에 연결되어 있어야 합니다.
+            if [x, y-1, 0] in answer or [x+1, y-1, 0] in answer or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
+                continue
+            else:
+                return False
 
-answer = []
+    return True
+
+def solution(n, build_frame):
+    answer = []
+
+    for data in build_frame:
+        x, y, a, b = data
+
+        if b == 0: # 삭제
+            answer.remove([x, y, a])
+            if not check(answer): # 규칙을 위반하지 않는지 체크
+                answer.append([x, y, a])
+        
+        if b == 1: # 설치
+            answer.append([x, y, a])
+            if not check(answer): # 규칙을 위반하지 않는지 체크
+                answer.remove([x, y, a])
+                
+    return sorted(answer)
+
 n = 5
-build_frame = [[1,0,0,1],[1,1,1,1],[2,1,0,1],[2,2,1,1],[5,0,0,1],[5,1,0,1],[4,2,1,1],[3,2,1,1]]
+# build_frame = [[1,0,0,1],[1,1,1,1],[2,1,0,1],[2,2,1,1],[5,0,0,1],[5,1,0,1],[4,2,1,1],[3,2,1,1]]
+build_frame = [[0,0,0,1],[2,0,0,1],[4,0,0,1],[0,1,1,1],[1,1,1,1],[2,1,1,1],[3,1,1,1],[2,0,0,0],[1,1,1,0],[2,2,0,1]]
 
-board = [[0 for _ in range(n+1)] for _ in range(n+1)]
-
-for data in build_frame:
-    x, y, a, b = data
-
-# for i in range(n, 0, -1):
-#     for j in range(n+1):
-#         print(board[j][i], end=' ')
-#     print()
+print(solution(n, build_frame))
